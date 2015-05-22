@@ -1,8 +1,8 @@
-public class Player implements Renderable, Collidable, Movable {
+public class Player implements Renderable, Collidable {
   private float hor,ver; // angles of player's view
   private float lastx, lasty;
 
-  public class Player(){
+  public Player(){
     x=0;
     y=0;
     z=0;
@@ -15,6 +15,9 @@ public class Player implements Renderable, Collidable, Movable {
   public void update(){
     camera(x,y,z,x+cos(ver)*cos(hor),y+sin(ver),z+cos(ver)*sin(hor),0,1,0);  
     move();
+  }
+  
+  public boolean colliding(Collidable e){
   }
   
   public void move(){

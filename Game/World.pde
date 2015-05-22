@@ -1,4 +1,4 @@
-public class World {
+/**public class World {
   ArrayList things<Renderable>;
   Player player;
   
@@ -6,4 +6,4 @@ public class World {
     things = new ArrayList<Renderable>;
     things.add
   }
-}
+}**/

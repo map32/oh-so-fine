@@ -1,6 +1,7 @@
-World world;
-Interface hud;
-Menu menu;
+//World world;
+//Interface hud;
+//Menu menu;
+Player player;
 
 boolean[] keys = new boolean[128];
 final int W = 87;
@@ -11,14 +12,15 @@ final int D = 68;
 void setup(){
   size(640,480,P3D);
   stroke(255);
+  player = new Player();
   noFill();
   loop();
 }
 
 void draw(){
   background(0);
-    camera(x,y,z,x+cos(ver)*cos(hor),y+sin(ver),z+cos(ver)*sin(hor),0,1,0);  
-    move();
+  player.update();
+  
   box(100);
 }
 
