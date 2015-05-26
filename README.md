@@ -10,7 +10,8 @@ The project will be on processing, and will be a first person view game with ran
 
 First, files for interfaces and classes have been added with no codes right now.
 
-Obi made a constructor for Wall class
+5/25/15
+Obi made Wall class
 
 5/25/15
 Dong completed first person view, made basics for each classes/interfaces
