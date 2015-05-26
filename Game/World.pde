@@ -1,9 +1,8 @@
 public class World {
-  ArrayList things<Renderable>;
+  ArrayList<Renderable> things;
   Player player;
   
   public World(){
-    things = new ArrayList<Renderable>;
-    things.add(new TNode<Renderable>(new Room
+    things = new ArrayList<Renderable>();
   }
 }

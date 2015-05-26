@@ -2,10 +2,9 @@ import java.util.Iterator;
 
 public abstract class Structure implements Collidable, Renderable {
   
-  private int tall,deep,wide;
+  protected int tall,deep,wide;
   
-  public abstract void add(){
-  }
+  public void update(){}
   
   public boolean colliding(Collidable struct){
     return false;
@@ -45,7 +44,7 @@ class TNode<E> implements Renderable{
   }
   
   public void update(){
-      data.update();
+      ((Renderable)data).update();
   }
   
   public int getDepth(){
@@ -70,13 +69,4 @@ class TNode<E> implements Renderable{
     return false;
   }
   
-}
-
-class Trees<E> {
-  TNode<E> root;
-  
-  public Trees(E n){
-    root = new TNode<E>(n,0);
-  }
-
 }

@@ -27,27 +27,27 @@ public class Player implements Renderable, Collidable {
   if(keys[W]==true)
       inc(5,0);
   if(keys[A]==true)
-      inc(5,PI/2);
+      inc(5,-PI/2);
   if(keys[S]==true)
       inc(5,PI);
   if(keys[D]==true)
-      inc(5,3*PI/2);
+      inc(5,-3*PI/2);
   }
 
   public void inc(float forward, float angle){
     x += forward*cos(hor+angle);
-    z -= forward*sin(hor+angle);
+    z += forward*sin(hor+angle);
   }
   
   public void mousemove(){
     float dx = x2-mouseX;
     float dy = y2-mouseY;
     hor -= dx/width*2*PI;
-    ver -= dy/height*PI;
-    if(ver/PI/2*360>90){
-        ver = PI/2;
-    } else if (ver/PI/2*360<-90){
-        ver = -PI/2;
+    ver -= dy/height*2*PI;
+    if(ver/PI/2*360>89){
+        ver = 89./180*PI;
+    } else if (ver/PI/2*360<-89){
+        ver = -89./180*PI;
     }
     x2=mouseX;
     y2=mouseY;
