@@ -31,3 +31,7 @@ void keyPressed(){
 void keyReleased(){
     keys[keyCode]=false;
 }
+
+void mouseMoved(){
+    player.mousemove();
+  }

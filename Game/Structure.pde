@@ -1,11 +1,18 @@
+import java.util.Iterator;
+
 public abstract class Structure implements Collidable, Renderable {
   
+  private int tall,deep,wide;
+  
+  public abstract void add(){
+  }
+  
   public boolean colliding(Collidable struct){
-    
+    return false;
   }
 }
 
-class TNode<E> {
+class TNode<E> implements Renderable{
   private E data;
   private int depth;
   private ArrayList<TNode<E>> next;
@@ -37,8 +44,16 @@ class TNode<E> {
     return data;
   }
   
+  public void update(){
+      data.update();
+  }
+  
   public int getDepth(){
       return depth;
+  }
+  
+  public void setDepth(int d){
+      d = depth;
   }
   
   public boolean trim(int d){
@@ -47,7 +62,7 @@ class TNode<E> {
     } else {
       Iterator it = next.iterator();
       while(it.hasNext()){
-        if(it.next().trim()){
+        if(((TNode<E>)it.next()).trim(d+1)){
           it.remove();
         }
       }

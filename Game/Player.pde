@@ -1,6 +1,8 @@
 public class Player implements Renderable, Collidable {
   private float hor,ver; // angles of player's view
   private float lastx, lasty;
+  private float x,y,z;
+  private float x2,y2;
 
   public Player(){
     x=0;
@@ -18,6 +20,7 @@ public class Player implements Renderable, Collidable {
   }
   
   public boolean colliding(Collidable e){
+    return false;
   }
   
   public void move(){
@@ -36,14 +39,19 @@ public class Player implements Renderable, Collidable {
     z -= forward*sin(hor+angle);
   }
   
-  void mouseMoved(){
+  public void mousemove(){
     float dx = x2-mouseX;
     float dy = y2-mouseY;
     hor -= dx/width*2*PI;
-    ver += dy/height*2*PI;
+    ver -= dy/height*PI;
+    if(ver/PI/2*360>90){
+        ver = PI/2;
+    } else if (ver/PI/2*360<-90){
+        ver = -PI/2;
+    }
     x2=mouseX;
     y2=mouseY;
-    //System.out.println(cos(hor) +" "+sin(ver));
+    System.out.println(hor/PI/2*360 +" "+ver/PI/2*360);
   }
 
 }
