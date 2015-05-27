@@ -2,6 +2,7 @@
 //Interface hud;
 //Menu menu;
 Player player;
+Room roomy;
 
 boolean[] keys = new boolean[128];
 final int W = 87;
@@ -15,12 +16,13 @@ void setup(){
   player = new Player();
   noFill();
   loop();
+  Room roomy = new Room();
 }
 
 void draw(){
   background(0);
   player.update();
-  
+  roomy.update();
   box(100);
 }
 

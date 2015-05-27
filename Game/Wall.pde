@@ -1,7 +1,6 @@
 public class Wall implements Renderable{
   int x, y, z;
-  int w,h
-  
+  int w,h;
   
   public Wall(int xpos, int ypos, int wid, int hei){
    x = xpos;
@@ -15,6 +14,7 @@ public class Wall implements Renderable{
     z = zpos;
   }
   
+  
   public Wall(){
     rect(width * 0.25, height * 0.25, width * 0.5, height * 0.5);
   }
@@ -24,7 +24,6 @@ public class Wall implements Renderable{
       translate(x,y,z);
       rect(0,0,w,h);
     popMatrix();
-  
   }
 }
     

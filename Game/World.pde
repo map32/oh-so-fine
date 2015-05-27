@@ -1,8 +1,8 @@
 public class World {
-  ArrayList<Renderable> things;
+  ArrayList<Renderable> structures;
   Player player;
   
   public World(){
-    things = new ArrayList<Renderable>();
+    structures = new ArrayList<Renderable>();
   }
 }
