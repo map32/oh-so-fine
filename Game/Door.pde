@@ -1,19 +1,20 @@
 public class Door extends Structure {
 
-  private Wall[] walls;
+  private Prism[] rect;
 
-  public Door(){
+  public Door(int x, int y, int z){
     wide = 100;
-    tall = 300;
+    tall = 200;
     deep = 10;
-    walls = new Walls[4];
-    walls[0]= new Wall(x,y,z,wide,deep); //top
-    walls[1]= new Wall(x,y,z,deep,tall); //left
-    walls[2]= new Wall(x,y,z+deep,wide,deep); //bottom
-    walls[3]= new Wall(x,y,z+deep,deep,tall); //right 
+    rect = new Prism[4];
+    rect[0]= new Wall(x,y,z,wide,deep); //top
+    rect[1]= new Wall(x,y,z,deep,tall); //left
+    rect[2]= new Wall(x,y,z+deep,wide,deep); //bottom
+    rect[3]= new Wall(x,y,z+deep,deep,tall); //right 
   }
-  
-  public update(){
+ 
+ /* 
+  public void update(){
     pushMatrix();
     rotateY(PI/2);
     walls[1].update();
@@ -28,5 +29,17 @@ public class Door extends Structure {
     walls[2].update();
     popMatrix();
    }
+   */
+   
+   public void update(){
+     pushMatrix();
+     rotateY(PI/2);
+     walls[1].update();
+     popMatrix();
+     pushMatrix();
+     rotateY(PI);
+     walls[3].update();
+     popMatrix();
+ }
    
 }
