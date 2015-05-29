@@ -7,10 +7,10 @@ public class Door extends Structure {
     tall = 200;
     deep = 10;
     rect = new Prism[4];
-    rect[0]= new Wall(x,y,z,wide,deep); //top
-    rect[1]= new Wall(x,y,z,deep,tall); //left
-    rect[2]= new Wall(x,y,z+deep,wide,deep); //bottom
-    rect[3]= new Wall(x,y,z+deep,deep,tall); //right 
+    rect[0]= new Prism(x,y,z,wide,deep); //top
+    rect[1]= new Prism(x,y,z,deep,tall); //left
+    rect[2]= new Prism(x,y,z-tall,wide,deep); //bottom
+    rect[3]= new Prism(x,y,z-wide,deep,tall); //right 
   }
  
  /* 
@@ -33,12 +33,12 @@ public class Door extends Structure {
    
    public void update(){
      pushMatrix();
-     rotateY(PI/2);
-     walls[1].update();
+       rotateY(PI/2);
+       walls[1].update();
      popMatrix();
      pushMatrix();
-     rotateY(PI);
-     walls[3].update();
+       rotateY(PI);
+       walls[3].update();
      popMatrix();
  }
    
