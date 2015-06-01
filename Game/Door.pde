@@ -23,24 +23,7 @@ public class Door extends Structure {
     }
   }
  
- /* 
-  public void update(){
-    pushMatrix();
-    rotateY(PI/2);
-    walls[1].update();
-    translate(100, 0, 0);
-    walls[3].update();
-    popMatrix();
-    pushMatrix();
-    rotateY(PI/2);
-    rotateZ(PI/2);
-    walls[0].update();
-    translate(0,100,0);
-    walls[2].update();
-    popMatrix();
-   }
-   */
-   
+
    public void update(){
      pushMatrix();
      rect[0].update();
