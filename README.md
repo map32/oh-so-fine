@@ -34,9 +34,11 @@ Dong finished basic Tree/Node structure for random generation, fixed doors and c
 Finished:
   First person view/movement
   Structure Tree
+  
 In progress:
   3d Structures
   Collision detection
+  
 Unstarted:
   Textures
   Bow/Arrow
@@ -44,3 +46,6 @@ Unstarted:
   HUD
   Menu
   Sounds
+
+June 1 Demo
+  The latest branch is the demo. The structures will spawn as the game starts, and as the player walks inside the structures and moves through doors it will be shown that it keeps generation rooms or hallways beyond doors. However there is no collision check so the structures will overlap very often.
