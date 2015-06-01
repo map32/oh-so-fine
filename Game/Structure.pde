@@ -2,49 +2,89 @@ import java.util.Iterator;
 
 public abstract class Structure implements Collidable, Renderable {
   
+  protected int x,y,z;
   protected int tall,deep,wide;
+  protected float[][] branchP; //x,y,z,angle
+  public int branch = 0;
+  public int direction = 0;
   
   public void update(){}
+  
+  public int x(){
+    return x;
+  }
+  
+  public int y(){
+    return y;
+  }
+  
+  public int z(){
+    return z;
+  }
+  
+  public int w(){
+    return wide;
+  }
+  
+  public int d(){
+    return deep;
+  }
+  
+  public int h(){
+    return tall;
+  }
   
   public boolean colliding(Collidable struct){
     return false;
   }
+  
 }
 
-class TNode<E> implements Renderable{
-  private E data;
+class StNode implements Renderable{
+  private Structure data;
   private int depth;
-  private ArrayList<TNode<E>> next;
-  private TNode<E> parent;
+  private ArrayList<StNode> next;
+  private StNode parent = this;
   
-  public TNode(E n, int d){
-    data = n;
-    depth = d;
+  public StNode(Structure n){
+    this(n,null);
   }
   
-  public ArrayList<TNode<E>> getNextList(){
+  public StNode(Structure n, StNode pa){
+    data = n;
+    next = new ArrayList<StNode>();
+    if(pa!=null)
+      parent = pa;
+    //depth = d;
+  }
+  
+  public ArrayList<StNode> getNextList(){
       return next;
   }
 
-  public void addNext(E n){
-    TNode<E> d = new TNode<E>(n,depth+1);
+  public void addNext(Structure n){
+    StNode d = new StNode(n,this);
     next.add(d);
   }
 
-  public TNode<E> getParent(){
+  public StNode getParent(){
       return parent;
   }
 
-  public void set(E n){
+  public void set(Structure n){
       data = n;
   }
   
-  public E get(){
+  public Structure get(){
     return data;
   }
   
   public void update(){
-      ((Renderable)data).update();
+      data.update();
+      for(StNode n : next){
+        n.update();
+      }
+      
   }
   
   public int getDepth(){
@@ -55,18 +95,49 @@ class TNode<E> implements Renderable{
       d = depth;
   }
   
-  public boolean trim(int d){
-    if(d<=depth){
-        return true;
-    } else {
-      Iterator it = next.iterator();
-      while(it.hasNext()){
-        if(((TNode<E>)it.next()).trim(d+1)){
-          it.remove();
+  public void add(Random r){
+    if(next.size()==0){
+      for(int i=0;i<data.branch;i++){
+        System.out.println(data.branch);
+        int n = r.nextInt(5);
+        if(n==0){
+            if(data.branchP[i][3]==0){
+              addNext(new Hallway((int)data.branchP[i][0],0,(int)data.branchP[i][2],-1,-1,-1,data.direction+int(data.branchP[i][4]+360%360)));
+            } else {
+              addNext(new Hallway((int)data.branchP[i][0],0,(int)data.branchP[i][2],-1,-1,-1,(int)(data.direction+data.branchP[i][4]+360%360)));
+            }
+          } else {
+            addNext(new Room((int)data.branchP[i][0],0,(int)data.branchP[i][2],-1,-1,-1,data.direction+int(data.branchP[i][4]+360%360)));
+          }
         }
       }
     }
-    return false;
+  }
+
+class StTree implements Renderable{
+  private StNode origin;
+  private StNode current;
+  Random r = new Random();
+  
+  public StTree(){
+    origin = new StNode(new Hallway(-100,0,-100,-1,-1,-1));
+    current = origin;
+    current.add(r);
   }
   
+  public void update(){
+    if(!player.inside(current.get())){
+      if(player.inside(current.getParent().get())==true){
+        current = current.getParent();
+      } else {
+        for(StNode n : current.getNextList()){
+          if(player.inside(n.get())){
+            current = n;
+          }
+        }
+      }
+      current.add(r); // cost saving measure
+    }
+    origin.update();
+  }
 }

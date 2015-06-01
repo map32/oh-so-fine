@@ -2,7 +2,8 @@
 //Interface hud;
 //Menu menu;
 Player player;
-Room roomy;
+Room hall;
+StTree hi;
 
 boolean[] keys = new boolean[128];
 final int W = 87;
@@ -16,14 +17,14 @@ void setup(){
   player = new Player();
   noFill();
   loop();
-  Room roomy = new Room();
+  hi = new StTree();
 }
 
 void draw(){
   background(0);
   player.update();
-  roomy.update();
-  box(100);
+  hi.update();
+  box(40,240,40);
 }
 
 void keyPressed(){
@@ -36,4 +37,4 @@ void keyReleased(){
 
 void mouseMoved(){
     player.mousemove();
-  }
+}

@@ -1,26 +1,31 @@
 public class Player implements Renderable, Collidable {
   private float hor,ver; // angles of player's view
-  private float lastx, lasty;
   private float x,y,z;
+  private int w,h,d;
   private float x2,y2;
 
   public Player(){
     x=0;
-    y=0;
+    y=-40;
     z=0;
+    w=40;
+    d=40;
+    h=160;
     hor=0;
     ver=0;
-    lastx=0;
-    lasty=0;
   }
 
   public void update(){
-    camera(x,y,z,x+cos(ver)*cos(hor),y+sin(ver),z+cos(ver)*sin(hor),0,1,0);  
+    camera(x,0,z,x+cos(ver)*cos(hor),0+sin(ver),z+cos(ver)*sin(hor),0,1,0);  
     move();
   }
   
   public boolean colliding(Collidable e){
     return false;
+  }
+  
+  public boolean inside(Structure struct){
+    return (x>=struct.x() && x+w<=struct.x()+struct.w() && y>=struct.y() && y+h<=struct.y()+struct.h() && z<=struct.z() && z-d>=struct.z()-struct.d());
   }
   
   public void move(){
