@@ -48,4 +48,4 @@ Unstarted:
   Sounds
 
 June 1 Demo
-  The latest branch is the demo. The structures will spawn as the game starts, and as the player walks inside the structures and moves through doors it will be shown that it keeps generation rooms or hallways beyond doors. However there is no collision check so the structures will overlap very often.
+  "Demo1" branch: https://github.com/map32/oh-so-fine/tree/Demo1/Game The structures will spawn as the game starts, and as the player walks inside the structures and moves through doors it will be shown that it keeps generation rooms or hallways beyond doors. However there is no collision check so the structures will overlap very often.
