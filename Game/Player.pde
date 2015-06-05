@@ -58,5 +58,18 @@ public class Player implements Renderable, Collidable {
     y2=mouseY;
     System.out.println(hor/PI/2*360 +" "+ver/PI/2*360);
   }
+  
+  public float getX(){
+    return x;
+  }
+  
+  public float getY(){
+    return y;
+  }
+  
+  public float getZ(){
+    return z;
+  }
+  
 
 }

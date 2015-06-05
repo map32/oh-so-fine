@@ -73,5 +73,10 @@ public class Room extends Structure{
     doors.update();
   
   }
+  
+  public boolean colliding(Collidable e){
+    if Player.inside(){
+      for (int i = 1; i < 3 i++){
+        if (walls[i].x > Player.getX() 
 
 }
