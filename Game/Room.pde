@@ -1,7 +1,6 @@
 import java.util.Random;
 
 public class Room extends Structure{
-  Random r = new Random();
   private Wall[] walls;
   private Door doors;
 
@@ -29,15 +28,15 @@ public class Room extends Structure{
     if(zz==-1)
       z = r.nextInt(10000)-5000;
     
-    if(dr==90){ // set the directions of hallway
-      int temp = wide;
-      wide = -deep;
-      deep = temp;
-    } else if(dr == 180){
-      deep = -deep;
-    } else if(dr == 270){
+    if(dr==1){ // set the directions of hallway
       int temp = -wide;
       wide = -deep;
+      deep = temp;
+    } else if(dr == 2){
+      deep = -deep;
+    } else if(dr == 3){
+      int temp = -wide;
+      wide = deep;
       deep = temp;
     }
     
@@ -53,14 +52,22 @@ public class Room extends Structure{
     walls[4]= new Wall(x,y,z-deep,wide,tall); //back
     walls[5]= new Wall(x+wide,y,z,deep,tall,0,PI/2,0); //right
     
-    branchP = new float[1][5]; //coordinate and angle of door
+    branchP = new int[1][4]; //coordinate and angle of door
+    branchP[0][3]=0;
     branchP[0][0]=x+wide/2;
     branchP[0][1]=y+(tall-200);
     branchP[0][2]=z-deep;
-    branchP[0][3]=0;
-    branchP[0][4]=0;
+    if (dr==1) {
+      branchP[0][0]=x+wide;
+      branchP[0][1]=y+(tall-200);
+      branchP[0][2]=z-deep/2;
+    } else if (dr==3) {
+      branchP[0][0]=x+wide;
+      branchP[0][1]=y+(tall-200);
+      branchP[0][2]=z-deep/2;
+    }
     
-    doors = new Door((int)branchP[0][0],(int)branchP[0][1],(int)branchP[0][2],branchP[0][3]);
+    doors = new Door(branchP[0][0],branchP[0][1],branchP[0][2],direction);
   }
   
   public void update(){
@@ -74,9 +81,10 @@ public class Room extends Structure{
   
   }
   
-  public boolean colliding(Collidable e){
-    if Player.inside(){
+  /*public boolean colliding(Collidable e){
+    if player.inside(){
       for (int i = 1; i < 3 i++){
         if (walls[i].x > Player.getX() 
+      }*/
 
 }

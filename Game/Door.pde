@@ -1,31 +1,38 @@
 public class Door extends Structure {
 
   private Prism[] rect;
-  private float angle;
+  private int angle;
 
-  public Door(int x, int y, int z, float angle){
+  public Door(int x, int y, int z, int angle){
     wide = 100;
     tall = 200;
     deep = 10;
     this.angle = angle;
     
     rect = new Prism[4];
-    if(angle == -PI/2){
-      rect[0]= new Prism(x-deep/2,y,z,wide,deep,deep,angle); //top
-      rect[1]= new Prism(x-deep/2,y,z,deep,tall,deep,angle); //left
-      rect[2]= new Prism(x-deep/2,y+tall-deep,z,wide,deep,deep,angle); //bottom
-      rect[3]= new Prism(x-deep/2,y,z+wide-deep,deep,tall,deep,angle); //right 
+    if(angle == 1){
+      rect[0]= new Prism(x-deep/2,y,z+wide,deep,deep,wide); //top
+      rect[1]= new Prism(x-deep/2,y,z+deep,deep,tall,deep); //left
+      rect[2]= new Prism(x-deep/2,y+tall-deep,z+wide,deep,deep,wide); //bottom
+      rect[3]= new Prism(x-deep/2,y,z+wide-deep+deep,deep,tall,deep); //right 
+    } else if(angle == 3){
+      rect[0]= new Prism(x-deep/2,y,z+wide,deep,deep,wide); //top
+      rect[1]= new Prism(x-deep/2,y,z+deep,deep,tall,deep); //left
+      rect[2]= new Prism(x-deep/2,y+tall-deep,z+wide,deep,deep,wide); //bottom
+      rect[3]= new Prism(x-deep/2,y,z+wide,deep,tall,deep); //right 
     } else {
-      rect[0]= new Prism(x,y,z+deep/2,wide,deep,deep,angle); //top
-      rect[1]= new Prism(x,y,z+deep/2,deep,tall,deep,angle); //left
-      rect[2]= new Prism(x,y+tall-deep,z+deep/2,wide,deep,deep,angle); //bottom
-      rect[3]= new Prism(x+wide-deep,y,z+deep/2,deep,tall,deep,angle); //right 
+      rect[0]= new Prism(x,y,z+deep/2,wide,deep,deep); //top
+      rect[1]= new Prism(x,y,z+deep/2,deep,tall,deep); //left
+      rect[2]= new Prism(x,y+tall-deep,z+deep/2,wide,deep,deep); //bottom
+      rect[3]= new Prism(x+wide-deep,y,z+deep/2,deep,tall,deep); //right 
     }
+    
   }
  
 
    public void update(){
      pushMatrix();
+
      rect[0].update();
      rect[1].update();
      rect[2].update();

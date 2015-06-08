@@ -11,7 +11,6 @@ public class Hallway extends Structure{
   }
 
   public Hallway(int xx, int yy, int zz, int w, int t, int d, int angle){ //xyz are coodinates, wtd are dimensions
-    Random r = new Random();
     wide = w;
     tall = t;
     deep = d;
@@ -20,7 +19,7 @@ public class Hallway extends Structure{
     if(t==-1) //randomly assign coordinates and dimensions
       tall = r.nextInt(100)+200;
     if(d==-1)
-      deep = r.nextInt(2000)+1000;
+      deep = r.nextInt(2000)+4000;
     if(w==-1)
       wide = r.nextInt(100)+200;
     if(xx==-1)
@@ -30,15 +29,15 @@ public class Hallway extends Structure{
     if(zz==-1)
       z = r.nextInt(10000)-5000;
       
-    if(angle==90){ // set the directions of hallway
-      int temp = wide;
-      wide = deep;
-      deep = temp;
-    } else if(angle == 180){
-      deep = -deep;
-    } else if(angle == 270){
-      int temp = wide;
+    if(angle==1){ // set the directions of hallway
+      int temp = -wide;
       wide = -deep;
+      deep = temp;
+    } else if(angle == 2){
+      deep = -deep;
+    } else if(angle == 3){
+      int temp = -wide;
+      wide = deep;
       deep = temp;
     }
     this.x = xx; //top-left-front coordinate
@@ -54,30 +53,65 @@ public class Hallway extends Structure{
     walls[5]= new Wall(this.x+wide,this.y,this.z,deep,tall,0,PI/2,0); //right
     
     branch = r.nextInt(3)+4; //randomly assign number of doors, 3-6 inclusive
-    System.out.println(branch);
-    branchP = new float[branch][5];
+    branchP = new int[branch][4];
     branchP[0][0]=x+wide/2; // first door is opposite, not sideways
     branchP[0][1]=y+tall-200;
     branchP[0][2]=z-deep;
     branchP[0][3]=0;
-    branchP[0][4]=0;
+    if (angle==1) {
+      branchP[0][0]=x+wide;
+      branchP[0][1]=y+(tall-200);
+      branchP[0][2]=z-deep/2;
+    } else if (angle==3) {
+      branchP[0][0]=x+wide;
+      branchP[0][1]=y+(tall-200);
+      branchP[0][2]=z-deep/2;
+    }
     for(int i=1;i<branch/2;i++){ //left side doors
       branchP[i][0]=x;
       branchP[i][1]=y+tall-200;
       branchP[i][2]=z-i*deep/(branch/2);
-      branchP[i][3]=-PI/2;
-      branchP[i][4]=90;
+      branchP[i][3]=1;
+      if (angle==1) {
+        System.out.println(0+" "+wide+" "+deep);
+        branchP[i][0]=x+i*wide/(branch/2);
+        branchP[i][1]=y+(tall-200);
+        branchP[i][2]=z;
+      } else if (angle==3) {
+        System.out.println(1+" "+wide+" "+deep);
+        branchP[i][0]=x+i*wide/(branch/2);
+        branchP[i][1]=y+(tall-200);
+        branchP[i][2]=z;
+      }
     } for(int i=branch/2;i<branch;i++){ //right side doors
       branchP[i][0]=x+wide;
       branchP[i][1]=y+tall-200;
       branchP[i][2]=z-(i-branch/2+1)*deep/(branch/2+1);
-      branchP[i][3]=-PI/2;
-      branchP[i][4]=-90;
+      branchP[i][3]=3;
+      if (angle==1) {
+        System.out.println(2+" "+wide+" "+deep);
+        branchP[i][0]=x+(i-branch/2+1)*wide/(branch/2+1);
+        branchP[i][1]=y+(tall-200);
+        branchP[i][2]=z-deep;
+      } else if (angle==3) {
+        System.out.println(3+" "+wide+" "+deep);
+        branchP[i][0]=x+(i-branch/2+1)*wide/(branch/2+1);
+        branchP[i][1]=y+(tall-200);
+        branchP[i][2]=z-deep;
+      }
     }
-    
+    if(angle==2){
+      for(int i=0;i<branch;i++){
+        if(branchP[i][3]==1){
+          branchP[i][3]=3;
+        } else if (branchP[i][3]==3){
+          branchP[i][3]=1;
+        }
+      }
+    }
     doors = new Door[branch];
     for(int i=0;i<branch;i++){
-      doors[i] = new Door((int)branchP[i][0],(int)branchP[i][1],(int)branchP[i][2],branchP[i][3]);
+      doors[i] = new Door(branchP[i][0],branchP[i][1],branchP[i][2],(branchP[i][3]+angle)%4);
     }
     
   }

@@ -4,7 +4,8 @@ public abstract class Structure implements Collidable, Renderable {
   
   protected int x,y,z;
   protected int tall,deep,wide;
-  protected float[][] branchP; //x,y,z,angle
+  protected int[][] branchP; //x,y,z,angle
+  protected Random r = new Random(System.currentTimeMillis());
   public int branch = 0;
   public int direction = 0;
   
@@ -36,6 +37,10 @@ public abstract class Structure implements Collidable, Renderable {
   
   public boolean colliding(Collidable struct){
     return false;
+  }
+  
+  public String toString(){
+    return ""+x+" "+y+" "+z+" "+wide+" "+tall+" "+deep+"";
   }
   
 }
@@ -101,13 +106,10 @@ class StNode implements Renderable{
         System.out.println(data.branch);
         int n = r.nextInt(5);
         if(n==0){
-            if(data.branchP[i][3]==0){
-              addNext(new Hallway((int)data.branchP[i][0],0,(int)data.branchP[i][2],-1,-1,-1,data.direction+int(data.branchP[i][4]+360%360)));
-            } else {
-              addNext(new Hallway((int)data.branchP[i][0],0,(int)data.branchP[i][2],-1,-1,-1,(int)(data.direction+data.branchP[i][4]+360%360)));
-            }
+            addNext(new Hallway(data.branchP[i][0],0,data.branchP[i][2],-1,-1,-1,(data.direction+data.branchP[i][3])%4));
           } else {
-            addNext(new Room((int)data.branchP[i][0],0,(int)data.branchP[i][2],-1,-1,-1,data.direction+int(data.branchP[i][4]+360%360)));
+            addNext(new Room(data.branchP[i][0],0,data.branchP[i][2],-1,-1,-1,(data.direction+data.branchP[i][3])%4));
+            System.out.println("yes2");
           }
         }
       }
@@ -120,19 +122,21 @@ class StTree implements Renderable{
   Random r = new Random();
   
   public StTree(){
-    origin = new StNode(new Hallway(-100,0,-100,-1,-1,-1));
+    origin = new StNode(new Hallway(-100,0,100,-1,-1,-1));
     current = origin;
     current.add(r);
   }
   
   public void update(){
     if(!player.inside(current.get())){
+      System.out.println("no"+current.get().toString());
       if(player.inside(current.getParent().get())==true){
         current = current.getParent();
       } else {
         for(StNode n : current.getNextList()){
           if(player.inside(n.get())){
             current = n;
+            System.out.println("yes");
           }
         }
       }

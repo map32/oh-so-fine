@@ -25,7 +25,29 @@ public class Player implements Renderable, Collidable {
   }
   
   public boolean inside(Structure struct){
-    return (x>=struct.x() && x+w<=struct.x()+struct.w() && y>=struct.y() && y+h<=struct.y()+struct.h() && z<=struct.z() && z-d>=struct.z()-struct.d());
+      return insideX(struct.x(),struct.w()) && insideY(struct.y(),struct.h()) && insideZ(struct.z(),struct.d());
+  }
+  
+  private boolean insideX(int xx, int ww){
+    if(ww>=0){
+      return x>=xx && x+w<=xx+ww;
+    } else {
+      return x>=xx+ww && x+w<=xx;
+    }
+  }
+  private boolean insideY(int yy, int hh){
+    if(hh>=0){
+      return y>=yy && y+h<=yy+hh;
+    } else {
+      return y>=yy+hh && y+h<=yy;
+    }
+  }
+  private boolean insideZ(int zz, int dd){
+    if(dd>=0){
+      return z<=zz && z-d>=zz-dd;
+    } else {
+      return z+d>=zz && z<=zz-dd;
+    }
   }
   
   public void move(){
@@ -42,6 +64,7 @@ public class Player implements Renderable, Collidable {
   public void inc(float forward, float angle){
     x += forward*cos(hor+angle);
     z += forward*sin(hor+angle);
+    System.out.println(x+" "+y+" "+z+"");
   }
   
   public void mousemove(){
@@ -56,7 +79,6 @@ public class Player implements Renderable, Collidable {
     }
     x2=mouseX;
     y2=mouseY;
-    System.out.println(hor/PI/2*360 +" "+ver/PI/2*360);
   }
   
   public float getX(){

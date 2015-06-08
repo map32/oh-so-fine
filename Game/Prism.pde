@@ -3,14 +3,13 @@ public class Prism extends Structure{
   private Wall[] walls;
   private float angle;
   
-  public Prism(int x, int y, int z, int w, int h, int d, float a){
+  public Prism(int x, int y, int z, int w, int h, int d){
     tall = h;
     deep = d;
     wide = w;
     this.x = x;
     this.y = y;
     this.z = z;
-    angle = a;
     
     walls = new Wall[6];
     /*
@@ -33,7 +32,6 @@ public class Prism extends Structure{
   public void update(){
     pushMatrix();
     translate(x,y,z);
-    rotateY(angle);
     walls[0].update();
     walls[1].update();
     walls[2].update();

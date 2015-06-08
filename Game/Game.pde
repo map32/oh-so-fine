@@ -24,7 +24,6 @@ void draw(){
   background(0);
   player.update();
   hi.update();
-  box(40,240,40);
 }
 
 void keyPressed(){
