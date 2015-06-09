@@ -3,6 +3,7 @@ public class Player implements Renderable, Collidable {
   private float x,y,z;
   private int w,h,d;
   private float x2,y2;
+  private int speed;
 
   public Player(){
     x=0;
@@ -13,6 +14,7 @@ public class Player implements Renderable, Collidable {
     h=160;
     hor=0;
     ver=0;
+    speed=10;
   }
 
   public void update(){
@@ -52,19 +54,18 @@ public class Player implements Renderable, Collidable {
   
   public void move(){
   if(keys[W]==true)
-      inc(5,0);
+      inc(speed,0);
   if(keys[A]==true)
-      inc(5,-PI/2);
+      inc(speed,-PI/2);
   if(keys[S]==true)
-      inc(5,PI);
+      inc(speed,PI);
   if(keys[D]==true)
-      inc(5,-3*PI/2);
+      inc(speed,-3*PI/2);
   }
 
   public void inc(float forward, float angle){
     x += forward*cos(hor+angle);
     z += forward*sin(hor+angle);
-    System.out.println(x+" "+y+" "+z+"");
   }
   
   public void mousemove(){

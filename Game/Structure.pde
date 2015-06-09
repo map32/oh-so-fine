@@ -109,7 +109,6 @@ class StNode implements Renderable{
             addNext(new Hallway(data.branchP[i][0],0,data.branchP[i][2],-1,-1,-1,(data.direction+data.branchP[i][3])%4));
           } else {
             addNext(new Room(data.branchP[i][0],0,data.branchP[i][2],-1,-1,-1,(data.direction+data.branchP[i][3])%4));
-            System.out.println("yes2");
           }
         }
       }
@@ -129,7 +128,6 @@ class StTree implements Renderable{
   
   public void update(){
     if(!player.inside(current.get())){
-      System.out.println("no"+current.get().toString());
       if(player.inside(current.getParent().get())==true){
         current = current.getParent();
       } else {
