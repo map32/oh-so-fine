@@ -4,6 +4,7 @@
 Player player;
 Room hall;
 StTree hi;
+ArrayList<Arrow> arrows;
 
 boolean[] keys = new boolean[128];
 final int W = 87;
@@ -18,6 +19,7 @@ void setup(){
   noFill();
   loop();
   hi = new StTree();
+  arrows = new ArrayList<Arrow>();
 }
 
 void draw(){
@@ -36,4 +38,8 @@ void keyReleased(){
 
 void mouseMoved(){
     player.mousemove();
+}
+
+void mouseClicked(){
+  player.launch();
 }

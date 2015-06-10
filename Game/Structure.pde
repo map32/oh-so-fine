@@ -128,6 +128,7 @@ class StTree implements Renderable{
   
   public void update(){
     if(!player.inside(current.get())){
+      arrows.clear();
       if(player.inside(current.getParent().get())==true){
         current = current.getParent();
       } else {
@@ -139,6 +140,9 @@ class StTree implements Renderable{
         }
       }
       current.add(r); // cost saving measure
+    }
+    for(Arrow a : arrows){
+      a.update(current.get());
     }
     origin.update();
   }
