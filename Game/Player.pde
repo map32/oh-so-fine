@@ -25,8 +25,20 @@ public class Player implements Renderable, Collidable {
     //arrow();
   }
   
+  public boolean colHelp(Structure struct){
+    if (!(insideX(struct.x(), struct.w()) && insideZ(struct.z(),struct.d()))){
+      return false;
+    }else{
+      return true;
+    }
+    }
+  
   public boolean colliding(Collidable e){
-    return false;
+    return false; 
+  }
+  
+  public boolean colliding(Structure c){
+    return colHelp(c);
   }
   
   public boolean inside(Structure struct){

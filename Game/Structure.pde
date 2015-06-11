@@ -127,6 +127,11 @@ class StTree implements Renderable{
   }
   
   public void update(){
+    if (player.colliding(current.get())){
+      System.out.println("true");
+    } else {
+      System.out.println("false");
+    }
     if(!player.inside(current.get())){
       arrows.clear();
       if(player.inside(current.getParent().get())==true){
