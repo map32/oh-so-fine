@@ -81,6 +81,12 @@ public class Room extends Structure{
   
   }
   
+  public Door[] getDoors(){
+    Door[] d = new Door[1];
+    d[0]=doors;
+    return d;
+  }
+  
   /*public boolean colliding(Collidable e){
     if player.inside(){
       for (int i = 1; i < 3 i++){

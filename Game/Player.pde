@@ -34,15 +34,19 @@ public class Player implements Renderable, Collidable {
     }
   
   public boolean colliding(Collidable e){
-    return false; 
+    return false;
   }
   
-  public boolean colliding(Structure c){
+  /**public boolean colliding(Structure c){
     return colHelp(c);
+  }**/
+  
+  public boolean colliding(Structure struct){
+      return insideX(struct.x(),struct.w()) && insideY(struct.y(),struct.h()) && insideZ(struct.z(),struct.d());
   }
   
-  public boolean inside(Structure struct){
-      return insideX(struct.x(),struct.w()) && insideY(struct.y(),struct.h()) && insideZ(struct.z(),struct.d());
+  public boolean colliding2(Structure struct){
+    return !(outsideX(struct.x(),struct.w()) && outsideY(struct.y(),struct.h()) && outsideZ(struct.z(),struct.d()));
   }
   
   private boolean insideX(int xx, int ww){
@@ -64,6 +68,28 @@ public class Player implements Renderable, Collidable {
       return z<=zz && z-d>=zz-dd;
     } else {
       return z+d>=zz && z<=zz-dd;
+    }
+  }
+  
+    private boolean outsideX(int xx, int ww){
+    if(ww>=0){
+      return x>xx+ww || x+w<xx;
+    } else {
+      return x+w<xx+ww || x>xx;
+    }
+  }
+  private boolean outsideY(int yy, int hh){
+    if(hh>=0){
+      return y>yy+hh || y+h<yy;
+    } else {
+      return y+h<yy+hh || y>yy;
+    }
+  }
+  private boolean outsideZ(int zz, int dd){
+    if(dd>=0){
+      return z>zz+dd || z+d<zz;
+    } else {
+      return z+d<zz+dd || z>zz;
     }
   }
   
@@ -118,22 +144,23 @@ public class Player implements Renderable, Collidable {
     popMatrix();
   }
   
-  public void launch(){
-    Arrow a = new Arrow(x,y+40,z,hor,ver);
-    arrows.add(a);
+  public Arrow launch(){
+    return new Arrow(x,y+40,z,hor,ver);
   }
 
 }
 
 class Arrow implements Collidable, Renderable {
   PShape arrow;
-  int speed = 60;
+  Hitbox hitbox;
+  int speed = 30;
   PVector location;
   PVector hComponent;
   PVector vComponent;
   PVector gravity;
   float rx,ry,rz;
   int w, h, d;
+  boolean wasAtDoor;
   
   public Arrow(float x, float y, float z, float hor, float ver){
     location = new PVector(x,y,z);
@@ -143,27 +170,24 @@ class Arrow implements Collidable, Renderable {
     arrow = loadShape("arrow.OBJ");
     rx = -hor;
     ry = ver;
-    w = 6;
-    h = 6;
-    d = 200;
+    w = 5;
+    h = 5;
+    d = 5;
+    hitbox = new Hitbox(x,y,z,w,h,d,0,rx+PI/2,0);
+    wasAtDoor = false;
   }
   
-  public void update(){};
-  
-  public void update(Structure s){
-    if(!colliding(s)){
-      vComponent.add(gravity);
-      location.add(hComponent);
-      location.add(vComponent);
-    }
+  public void update(){
     pushMatrix();
       translate(location.x,location.y,location.z);
       rotateY(rx);
       //rotateX(ry);
       shape(arrow,0,0,200,6);
-      translate(10,0,0);
+      rotateX(PI/2);
       shape(arrow,0,0,200,6);
     popMatrix();
+    hitbox.locate(location);
+    hitbox.update();
   }
   
   public boolean colliding(Collidable c){
@@ -171,33 +195,13 @@ class Arrow implements Collidable, Renderable {
   }
   
   public boolean colliding(Structure c){
-    return !inside(c);
+    return hitbox.colliding(c);
   }
   
-  public boolean inside(Structure struct){
-      return insideX(struct.x(),struct.w()) && insideY(struct.y(),struct.h()) && insideZ(struct.z(),struct.d());
-  }
-  
-  private boolean insideX(int xx, int ww){
-    if(ww>=0){
-      return location.x>=xx && location.x+w<=xx+ww;
-    } else {
-      return location.x>=xx+ww && location.x+w<=xx;
-    }
-  }
-  private boolean insideY(int yy, int hh){
-    if(hh>=0){
-      return location.y>=yy && location.y+h<=yy+hh;
-    } else {
-      return location.y>=yy+hh && location.y+h<=yy;
-    }
-  }
-  private boolean insideZ(int zz, int dd){
-    if(dd>=0){
-      return location.z<=zz && location.z-d>=zz-dd;
-    } else {
-      return location.z+d>=zz && location.z<=zz-dd;
-    }
+  public void move(){
+    vComponent.add(gravity);
+    location.add(hComponent);
+    location.add(vComponent);
   }
   
 }

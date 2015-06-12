@@ -35,12 +35,16 @@ public abstract class Structure implements Collidable, Renderable {
     return tall;
   }
   
-  public boolean colliding(Collidable struct){
+  public boolean colliding(Structure struct){
     return false;
   }
   
   public String toString(){
     return ""+x+" "+y+" "+z+" "+wide+" "+tall+" "+deep+"";
+  }
+  
+  public Door[] getDoors(){
+    return null;
   }
   
 }
@@ -118,37 +122,29 @@ class StNode implements Renderable{
 class StTree implements Renderable{
   private StNode origin;
   private StNode current;
-  Random r = new Random();
   
   public StTree(){
     origin = new StNode(new Hallway(-100,0,100,-1,-1,-1));
     current = origin;
-    current.add(r);
+    current.add(new Random());
   }
   
   public void update(){
-    if (player.colliding(current.get())){
-      System.out.println("true");
-    } else {
-      System.out.println("false");
-    }
-    if(!player.inside(current.get())){
-      arrows.clear();
-      if(player.inside(current.getParent().get())==true){
-        current = current.getParent();
+    origin.update();
+  }
+  
+  public StNode checkLocation(Collidable c){
+    if(!c.colliding((Structure)current.get())){
+      if(c.colliding((Structure)current.getParent().get())==true){
+        return current.getParent();
       } else {
         for(StNode n : current.getNextList()){
-          if(player.inside(n.get())){
-            current = n;
-            System.out.println("yes");
+          if(c.colliding((Structure)n.get())){
+            return n;
           }
         }
       }
-      current.add(r); // cost saving measure
     }
-    for(Arrow a : arrows){
-      a.update(current.get());
-    }
-    origin.update();
+    return current;
   }
 }

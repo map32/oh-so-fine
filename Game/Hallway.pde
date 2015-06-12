@@ -127,5 +127,9 @@ public class Hallway extends Structure{
       d.update();
     }
   }
+  
+  public Door[] getDoors(){
+    return doors;
+  }
 
 }
