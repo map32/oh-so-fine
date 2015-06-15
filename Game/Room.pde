@@ -16,11 +16,11 @@ public class Room extends Structure{
     direction = dr;
     
     if(t==-1) //randomize dimensions and coordinates if they equal -1
-      tall = r.nextInt(80)+200;
+      tall = r.nextInt(500)+1000;
     if(d==-1)
-      deep = r.nextInt(600)+200;
+      deep = r.nextInt(1000)+1000;
     if(w==-1)
-      wide = r.nextInt(600)+200;
+      wide = r.nextInt(1000)+1000;
     if(xx==-1)
       x = r.nextInt(10000)-5000;
     if(yy==-1)

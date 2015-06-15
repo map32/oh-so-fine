@@ -16,7 +16,7 @@ public class Door extends Structure {
       rect[1]= new Prism(x-deep/2,y,z+deep,deep,tall,deep); //left
       rect[2]= new Prism(x-deep/2,y+tall-deep,z+wide,deep,deep,wide); //bottom
       rect[3]= new Prism(x-deep/2,y,z+wide-deep+deep,deep,tall,deep); //right
-      deep = 40;
+      deep = 20;
       this.x = x-deep/2;
       this.y = y;
       this.z = z;
@@ -29,7 +29,7 @@ public class Door extends Structure {
       rect[2]= new Prism(x-deep/2,y+tall-deep,z+wide,deep,deep,wide); //bottom
       rect[3]= new Prism(x-deep/2,y,z+wide,deep,tall,deep); //right 
       
-      deep = 40;
+      deep = 20;
       this.x = x-deep/2;
       this.y = y;
       this.z = z;
@@ -41,7 +41,7 @@ public class Door extends Structure {
       rect[1]= new Prism(x,y,z+deep/2,deep,tall,deep); //left
       rect[2]= new Prism(x,y+tall-deep,z+deep/2,wide,deep,deep); //bottom
       rect[3]= new Prism(x+wide-deep,y,z+deep/2,deep,tall,deep); //right 
-      deep = 40;
+      deep = 20;
       this.x = x;
       this.y = y;
       this.z = z+deep/2;
@@ -54,11 +54,11 @@ public class Door extends Structure {
    public void update(){
      pushMatrix();
 
-     //rect[0].update();
-     //rect[1].update();
-     //rect[2].update();
-     //rect[3].update();
-     truerect.update();
+     rect[0].update();
+     rect[1].update();
+     rect[2].update();
+     rect[3].update();
+     //truerect.update();
      popMatrix();
    }
    

@@ -8,6 +8,7 @@ final int W = 87;
 final int A = 65;
 final int S = 83;
 final int D = 68;
+boolean pressLock;
 
 void setup(){
   size(640,480,P3D);
@@ -34,6 +35,13 @@ void mouseMoved(){
     world.mousemove();
 }
 
-void mouseClicked(){
+void mousePressed(){
+  if(!pressLock) {
+    pressLock = true;
     world.launch();
+  }
+}
+
+void mouseReleased(){
+  pressLock = false;
 }

@@ -21,7 +21,7 @@ public class Hitbox implements Collidable{
     rotateX(rx);
     rotateY(ry);
     rotateZ(rz);
-    translate(0,0,-deep/2);
+    translate(wide/2,0,-deep/2);
     box(wide,tall,deep);
     popMatrix();
   }
@@ -33,34 +33,44 @@ public class Hitbox implements Collidable{
   }
   
   
-  public boolean colliding(Structure struct){
+  public boolean colliding2(Structure struct){
     //System.out.println(overlapX(struct.x(),struct.w())+" "+overlapY(struct.y(),struct.h())+" "+overlapZ(struct.z(),struct.d()));
-    return overlapX(struct.x(),struct.w()) && overlapY(struct.y(),struct.h()) && overlapZ(struct.z(),struct.d());
+    return (overlapX(struct.x(),struct.w()) && overlapY(struct.y(),struct.h()) && overlapZ(struct.z(),struct.d()));
   }
   
-  private boolean insideX(int xx, int ww){
+  public boolean colliding2(Hitbox h){
+    //System.out.println(overlapX(struct.x(),struct.w())+" "+overlapY(struct.y(),struct.h())+" "+overlapZ(struct.z(),struct.d()));
+    return (overlapX(h.x,h.wide) && overlapY(h.y,h.tall) && overlapZ(h.z,h.deep));
+  }
+  
+  public boolean colliding(Structure struct){
+    //System.out.println(overlapX(struct.x(),struct.w())+" "+overlapY(struct.y(),struct.h())+" "+overlapZ(struct.z(),struct.d()));
+    return insideX(struct.x(),struct.w()) && insideY(struct.y(),struct.h()) && insideZ(struct.z(),struct.d());
+  }
+  
+  public boolean insideX(float xx, int ww){
     if(ww>=0){
       return x>=xx && x+wide<=xx+ww;
     } else {
       return x>=xx+ww && x+wide<=xx;
     }
   }
-  private boolean insideY(int yy, int hh){
+  public boolean insideY(float yy, int hh){
     if(hh>=0){
       return y>=yy && y+tall<=yy+hh;
     } else {
       return y>=yy+hh && y+tall<=yy;
     }
   }
-  private boolean insideZ(int zz, int dd){
+  public boolean insideZ(float zz, int dd){
     if(dd>=0){
       return z<=zz && z-deep>=zz-dd;
     } else {
-      return z+deep>=zz && z<=zz-dd;
+      return z-deep>=zz && z<=zz-dd;
     }
   }
   
-  private boolean overlapX(int xx, int ww){
+  private boolean overlapX(float xx, int ww){
     //System.out.println(x +" "+wide+" "+xx+" "+ww+"x");
     if(ww>=0){
       return x+wide>xx && x<xx+ww;
@@ -68,7 +78,7 @@ public class Hitbox implements Collidable{
       return x+wide>xx+ww && x<xx;
     }
   }
-  private boolean overlapY(int yy, int hh){
+  private boolean overlapY(float yy, int hh){
     //System.out.println(y +" "+tall+" "+yy+" "+hh+"y");
     if(hh>=0){
       return y+tall>yy && y<yy+hh;
@@ -76,13 +86,92 @@ public class Hitbox implements Collidable{
       return y+tall>yy+hh && y<yy;
     }
   }
-  private boolean overlapZ(int zz, int dd){
+  private boolean overlapZ(float zz, int dd){
     //System.out.println(z +" "+deep+" "+zz+" "+dd+"z");
     if(dd>=0){
-      return z+deep>zz-dd && z<zz;
+      return z>zz-dd && z-deep<zz;
     } else {
-      return z+deep>zz && z<zz-dd;
+      return z>zz && z-deep<zz-dd;
     }
+  }
+  
+  public boolean adjustX(int xx, int ww){
+    if(ww>=0){
+      if(x<xx){
+        x=xx;
+        return true;
+        //x+=20;
+      } else if(x+wide>xx+ww){
+        x=-wide+xx+ww;
+        //x=x-wide/2;
+        return true;
+        //x-=20;
+      }
+    } else {
+      if(x<xx+ww){
+        x=xx+ww;
+        return true;
+        //x+=20;
+      } else if(x+wide>xx){
+        x=-wide+xx;
+        return true;
+        //x-=20;
+      }
+    }
+    return false;
+  }
+  
+  public boolean adjustY(int yy, int hh){
+    if(hh>=0){
+      if(y<yy){
+        y=yy;
+        System.out.println("1");
+        return true;
+      } else if(y+tall>yy+hh){
+        y=-tall+yy+hh;
+        System.out.println("2");
+        return true;
+      }
+    } else {
+      if(y<yy+hh){
+        y=yy+hh;
+        System.out.println("3");
+        return true;
+      } else if(y+tall>yy){
+        y=-tall+yy;
+        System.out.println("4");
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean adjustZ(int zz, int dd){
+    if(dd>=0){
+      if(z>zz){
+        System.out.println("a");
+        z=zz;
+        return true;
+      }
+      else if(z-deep<zz-dd){
+        System.out.println("b");
+        z=deep+zz-dd;
+        //z=z+deep/2;
+        return true;
+      }
+    } else {
+      if(z-deep<zz){
+        System.out.println("c");
+        z-=z-deep-zz;
+        return true;
+      }
+      else if(z>zz-dd){
+        System.out.println("d");
+        z=zz-dd;
+        return true;
+      }
+    }
+    return false;
   }
 
 }
