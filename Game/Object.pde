@@ -3,11 +3,13 @@ public class Objecty implements Collidable2, Renderable{
   PVector movingV;
   StNode lastLocation;
   boolean dead;
+  color col;
   
   public Objecty(float x, float y, float z, int size, float rx, float ry, float rz, StNode n){
     Random r = new Random();
     hitbox = new Hitbox(x,y,z,size,size,size,rx,ry,rz);
     movingV = new PVector(r.nextFloat()*10,r.nextFloat()*10,r.nextFloat()*10);
+    color = color(r.nextInt(100),100,100,100);
     lastLocation = n;
   }
   
@@ -20,6 +22,7 @@ public class Objecty implements Collidable2, Renderable{
   public void update(){
     pushMatrix();
       //hitbox.update();
+      fill(col);
       translate(hitbox.x,hitbox.y,hitbox.z);
       translate(hitbox.wide/2,0,-hitbox.wide/2);
       sphere(hitbox.wide);
