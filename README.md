@@ -1,6 +1,6 @@
 # oh-so-fine
 Dong Shin & Abhimannu Majumder
-Team Name: Buttercup
+Team Name: oh. so. fine.
 
 Proposal:
 The project is mainly a first person view game, where the player can collect objects, the world is randomly generated, and so on. It will involve random spawning of rooms and hallways which the player can explore in addition to various "objects" which can be pretty random and may be collectable. The player would have a bow and arrow and can shoot. There wouldbe no lose condition, but it wins when it collects enought objects. Each "structure" or rooms/hallways would be a node, and each time the player passes through from one structure to another it will calculate node distances and despawn and spawn appropriate structures. It will also have a HUD, a menu, maybe music and sound effects.
@@ -36,31 +36,21 @@ Dong finished basic Tree/Node structure for random generation, fixed doors and c
 
 
 Finished:
-
   First person view/movement
-  
   Structure Tree
   
   
 In progress:
-
   3d Structures
-  
   Collision detection
   
   
 Unstarted:
-
   Textures
-  
   Bow/Arrow
-  
   Objects
-  
   HUD
-  
   Menu
-  
   Sounds
 
 
@@ -81,30 +71,34 @@ June 8 Demo
 The structures now spawn properly, however they may overlap due to it requireing n^2 check of locations. The arrow shoots but it does not go through doors.
 
 Finished:
-
   First person view/movement
-  
   Structure Tree
-  
   3d Structures
   
 In progress:
-  
   Collision detection
-  
   Bow/Arrow
   
   
 Unstarted:
-
   Textures
-  
   Objects
-  
   HUD
-  
   Menu
-  
   Sounds
 
+6/10/15
 
+Dong created arrow class; the arrow has a hitbox, and blocks when it collides with a structure. However it needs to be fixed so that they can go through doors.
+
+6/11/15
+
+Obi worked on colliding function and strated working on HUD. 
+
+6/12/15
+
+Dong revamped the general code structure; the World class now contains most of the gameplay aspects such as players structures arrows etc. Only hud and Menu are not part of world. Also he worked more on general collision detection of players and others through hitboxes.
+
+6/15/15
+
+Obi worked more on HUD and finished Menu and HUD classes. Dong fixed arrow curving, created Object classes which aretargets of the arrows and players can gain points from it. When the player runs out of arrows or 
