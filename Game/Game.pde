@@ -15,6 +15,7 @@ void setup(){
   stroke(255);
   noFill();
   loop();
+  colorMode(HSB,100,100,100,100);
   world = new World();
   hud = new Interface();
   menu = new Menu();
