@@ -23,29 +23,88 @@ The project will be on processing, and will be a first person view game with ran
 First, files for interfaces and classes have been added with no codes right now.
 
 5/25/15
+
 Obi made Wall class, and Prism class for Door generation
 
 5/25/15
+
 Dong completed first person view, made basics for each classes/interfaces
 
 5/31/15
+
 Dong finished basic Tree/Node structure for random generation, fixed doors and created Hallway
 
+
 Finished:
+
   First person view/movement
+  
   Structure Tree
   
+  
 In progress:
+
   3d Structures
+  
   Collision detection
   
+  
 Unstarted:
+
   Textures
+  
   Bow/Arrow
+  
   Objects
+  
   HUD
+  
   Menu
+  
   Sounds
+
 
 June 1 Demo
   "Demo1" branch: https://github.com/map32/oh-so-fine/tree/Demo1/Game The structures will spawn as the game starts, and as the player walks inside the structures and moves through doors it will be shown that it keeps generation rooms or hallways beyond doors. However there is no collision check so the structures will overlap very often.
+
+
+6/7/15
+
+Obi worked on basic collision detection for player with the walls.
+
+Dong worked on properly orienting the structures so that they spawn properly with the doors.
+
+Dong worked on Arrow class and its collision detection with the walls.
+(** the 50000+ lines of code is due to the model file of arrow.)
+
+June 8 Demo
+The structures now spawn properly, however they may overlap due to it requireing n^2 check of locations. The arrow shoots but it does not go through doors.
+
+Finished:
+
+  First person view/movement
+  
+  Structure Tree
+  
+  3d Structures
+  
+In progress:
+  
+  Collision detection
+  
+  Bow/Arrow
+  
+  
+Unstarted:
+
+  Textures
+  
+  Objects
+  
+  HUD
+  
+  Menu
+  
+  Sounds
+
+
