@@ -2,6 +2,7 @@ public class Wall implements Renderable{
   int x, y, z;
   float rx, ry, rz = 0;
   int w,h;
+  color col = color(new Random().nextInt(100),100,100,90);
   
   public Wall(int xpos, int ypos, int wid, int hei){
    x = xpos;
@@ -29,6 +30,7 @@ public class Wall implements Renderable{
   
   public void update(){
     pushMatrix();
+      fill(col);
       translate(x,y,z);
       if(rx != 0)
         rotateX(rx);
