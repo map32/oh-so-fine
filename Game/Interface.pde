@@ -22,7 +22,7 @@ public class Interface{
     hint(DISABLE_DEPTH_TEST);
     noLights();
     
-    text(60-(millis() * 1000)+"s", width/2, 40);
+    //text(60-(millis() * 1000)+"s", width/2, 40);
     text(score, 40, 40);
     text(arrow, 40, 80);
     
