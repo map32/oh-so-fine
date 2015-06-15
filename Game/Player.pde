@@ -1,12 +1,16 @@
-public class Player implements Renderable, Collidable {
+public class Player implements Renderable, Collidable, Collidable2 {
   private float hor,ver; // angles of player's view
   private float x,y,z;
   private int w,h,d;
   private float x2,y2;
   private int speed;
   private PShape bow;
+  private int score;
+  boolean wasAtDoor;
+  Hitbox hitbox;
 
   public Player(){
+    hitbox = new Hitbox(-20,-40,20,40,160,40,0,0,0);
     x=0;
     y=-40;
     z=0;
@@ -19,19 +23,22 @@ public class Player implements Renderable, Collidable {
     //bow = loadShape("bow.OBJ");
   }
 
-  public void update(){
-    camera(x,0,z,x+cos(ver)*cos(hor),0+sin(ver),z+cos(ver)*sin(hor),0,1,0);  
+  public void update(){ 
     move();
+    hitbox.x = x-w/2;
+    hitbox.y = y+h/2;
+    hitbox.z = z+d/2;
+    hitbox.update();
     //arrow();
   }
   
-  public boolean colHelp(Structure struct){
+  /*public boolean colHelp(Structure struct){
     if (!(insideX(struct.x(), struct.w()) && insideZ(struct.z(),struct.d()))){
       return false;
     }else{
       return true;
     }
-    }
+    }*/
   
   public boolean colliding(Collidable e){
     return false;
@@ -42,36 +49,26 @@ public class Player implements Renderable, Collidable {
   }**/
   
   public boolean colliding(Structure struct){
-      return insideX(struct.x(),struct.w()) && insideY(struct.y(),struct.h()) && insideZ(struct.z(),struct.d());
+      return hitbox.colliding(struct);
   }
   
   public boolean colliding2(Structure struct){
-    return !(outsideX(struct.x(),struct.w()) && outsideY(struct.y(),struct.h()) && outsideZ(struct.z(),struct.d()));
+    return hitbox.colliding2(struct);
   }
   
-  private boolean insideX(int xx, int ww){
-    if(ww>=0){
-      return x>=xx && x+w<=xx+ww;
-    } else {
-      return x>=xx+ww && x+w<=xx;
-    }
-  }
-  private boolean insideY(int yy, int hh){
-    if(hh>=0){
-      return y>=yy && y+h<=yy+hh;
-    } else {
-      return y>=yy+hh && y+h<=yy;
-    }
-  }
-  private boolean insideZ(int zz, int dd){
-    if(dd>=0){
-      return z<=zz && z-d>=zz-dd;
-    } else {
-      return z+d>=zz && z<=zz-dd;
+  public void adjustX(int xx, int ww){
+    if(hitbox.adjustX(xx,ww)){
+      x = hitbox.x+w/2;
     }
   }
   
-    private boolean outsideX(int xx, int ww){
+  public void adjustZ(int zz, int dd){
+    if(hitbox.adjustZ(zz,dd)){
+      z = hitbox.z-d/2;
+    }
+  }
+  
+  private boolean outsideX(int xx, int ww){
     if(ww>=0){
       return x>xx+ww || x+w<xx;
     } else {
@@ -102,6 +99,10 @@ public class Player implements Renderable, Collidable {
       inc(speed,PI);
   if(keys[D]==true)
       inc(speed,-3*PI/2);
+  }
+
+  public void see(){
+    camera(x,0,z,x+cos(ver)*cos(hor),0+sin(ver),z+cos(ver)*sin(hor),0,1,0); 
   }
 
   public void inc(float forward, float angle){
@@ -135,53 +136,59 @@ public class Player implements Renderable, Collidable {
     return z;
   }
   
-  public void arrow(){
-    pushMatrix();
-      translate(x,y,z-50);
-      rotateZ(PI/2);
-      rotateX(PI/2);
-      shape(bow,0,0,200,20);
-    popMatrix();
-  }
-  
   public Arrow launch(){
     return new Arrow(x,y+40,z,hor,ver);
   }
 
+  public int score(){
+    return score;
+  }
+  
+  public void incScore(){
+    score++;
+    System.out.println(score);
+  }
+
 }
 
-class Arrow implements Collidable, Renderable {
+class Arrow implements Collidable, Renderable, Collidable2 {
   PShape arrow;
   Hitbox hitbox;
-  int speed = 30;
+  int speed = 60;
   PVector location;
+  PVector dLocation;
   PVector hComponent;
   PVector vComponent;
   PVector gravity;
   float rx,ry,rz;
   int w, h, d;
   boolean wasAtDoor;
+  boolean dead;
+  StNode lastLocation;
   
   public Arrow(float x, float y, float z, float hor, float ver){
     location = new PVector(x,y,z);
-    gravity = new PVector(0,0.1,0);
+    dLocation = new PVector();
+    dLocation.set(location);
+    gravity = new PVector(0,0.5,0);
     hComponent = new PVector(speed*cos(ver)*cos(hor),0,speed*cos(ver)*sin(hor));
     vComponent = new PVector(0,speed*sin(ver),0);
     arrow = loadShape("arrow.OBJ");
     rx = -hor;
     ry = ver;
-    w = 5;
-    h = 5;
-    d = 5;
+    w = 20;
+    h = 20;
+    d = 20;
     hitbox = new Hitbox(x,y,z,w,h,d,0,rx+PI/2,0);
     wasAtDoor = false;
+    dead = false;
   }
   
   public void update(){
     pushMatrix();
       translate(location.x,location.y,location.z);
       rotateY(rx);
-      //rotateX(ry);
+      rotateZ(rz);
       shape(arrow,0,0,200,6);
       rotateX(PI/2);
       shape(arrow,0,0,200,6);
@@ -198,10 +205,21 @@ class Arrow implements Collidable, Renderable {
     return hitbox.colliding(c);
   }
   
+  public boolean colliding2(Structure c){
+    return hitbox.colliding2(c);
+  }
+  
+  public boolean colliding2(Hitbox h){
+    return hitbox.colliding2(h);
+  }
+  
   public void move(){
     vComponent.add(gravity);
     location.add(hComponent);
     location.add(vComponent);
+    PVector a = PVector.sub(location,dLocation);
+    dLocation.set(location);
+    rz = atan(a.y/(sqrt(pow(a.z,2)+pow(a.x,2))));
   }
   
 }

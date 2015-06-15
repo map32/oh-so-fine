@@ -17,11 +17,11 @@ public class Hallway extends Structure{
     direction = angle;
 
     if(t==-1) //randomly assign coordinates and dimensions
-      tall = r.nextInt(100)+200;
+      tall = r.nextInt(200)+200;
     if(d==-1)
-      deep = r.nextInt(2000)+4000;
+      deep = r.nextInt(3000)+3000;
     if(w==-1)
-      wide = r.nextInt(100)+200;
+      wide = r.nextInt(200)+200;
     if(xx==-1)
       x = r.nextInt(10000)-5000;
     if(yy==-1)
@@ -111,7 +111,6 @@ public class Hallway extends Structure{
     doors = new Door[branch];
     for(int i=0;i<branch;i++){
       doors[i] = new Door(branchP[i][0],branchP[i][1],branchP[i][2],(branchP[i][3]+angle)%4);
-      System.out.println((branchP[i][3]+angle)%4+" "+"hi");
     }
     
   }

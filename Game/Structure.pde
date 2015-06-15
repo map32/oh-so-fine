@@ -73,7 +73,7 @@ class StNode implements Renderable{
 
   public void addNext(Structure n){
     StNode d = new StNode(n,this);
-    next.add(d);
+    next.add(0,d);
   }
 
   public StNode getParent(){
@@ -107,7 +107,6 @@ class StNode implements Renderable{
   public void add(Random r){
     if(next.size()==0){
       for(int i=0;i<data.branch;i++){
-        System.out.println(data.branch);
         int n = r.nextInt(5);
         if(n==0){
             addNext(new Hallway(data.branchP[i][0],0,data.branchP[i][2],-1,-1,-1,(data.direction+data.branchP[i][3])%4));
@@ -116,6 +115,7 @@ class StNode implements Renderable{
           }
         }
       }
+
     }
   }
 
@@ -133,18 +133,22 @@ class StTree implements Renderable{
     origin.update();
   }
   
-  public StNode checkLocation(Collidable c){
-    if(!c.colliding((Structure)current.get())){
-      if(c.colliding((Structure)current.getParent().get())==true){
-        return current.getParent();
+  public StNode checkLocation(Collidable2 c){
+    return checkLocation(c,current);
+  }
+  
+  public StNode checkLocation(Collidable2 c, StNode n){
+    if(!c.colliding(n.get())){
+      if(c.colliding2(n.getParent().get())==true){
+        return n.getParent();
       } else {
-        for(StNode n : current.getNextList()){
-          if(c.colliding((Structure)n.get())){
-            return n;
+        for(StNode nn : n.getNextList()){
+          if(c.colliding2(nn.get())){
+            return nn;
           }
         }
       }
     }
-    return current;
+    return n;
   }
 }
