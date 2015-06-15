@@ -18,9 +18,6 @@ public class Hitbox implements Collidable{
   public void update(){
     pushMatrix();
     translate(x,y,z);
-    rotateX(rx);
-    rotateY(ry);
-    rotateZ(rz);
     translate(wide/2,0,-deep/2);
     box(wide,tall,deep);
     popMatrix();

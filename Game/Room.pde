@@ -20,7 +20,7 @@ public class Room extends Structure{
     if(d==-1)
       deep = r.nextInt(1000)+1000;
     if(w==-1)
-      wide = r.nextInt(1000)+1000;
+      wide = r.nextInt(500)+500;
     if(xx==-1)
       x = r.nextInt(10000)-5000;
     if(yy==-1)

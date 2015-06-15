@@ -1,11 +1,9 @@
 public class Interface{
   
-  int score, arrow;
-  
   public Interface(){
   }
   
-  public void lose(){
+  public void lose(int score, int arrow){
     pushMatrix();
     camera();
     hint(DISABLE_DEPTH_TEST);
@@ -18,7 +16,7 @@ public class Interface{
     popMatrix();
   }
   
-  public void update(){
+  public void update(int score, int arrow){
     pushMatrix();
     camera();
     hint(DISABLE_DEPTH_TEST);

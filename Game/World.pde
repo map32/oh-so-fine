@@ -3,12 +3,15 @@ public class World implements Renderable{
   Player player;
   ArrayList<Arrow> arrows;
   ArrayList<Objecty> objects;
+  int score;
+  int arrowsN;
   
   public World(){
     player = new Player();
     map = new StTree();
     arrows = new ArrayList<Arrow>();
     objects = new ArrayList<Objecty>();
+    arrowsN = 100;
   }
   
   public void update(){
@@ -30,7 +33,7 @@ public class World implements Renderable{
         if(!o.dead && a.lastLocation == o.lastLocation){
           if(a.colliding2(o.hitbox)){
             o.dead = true;
-            player.incScore();
+            score++;
           }
         }
       }
@@ -58,21 +61,25 @@ public class World implements Renderable{
   public boolean arrowCheck(StNode n, Arrow a){
     for(Door d : n.get().getDoors()){
       if(a.colliding2(d)){
-        System.out.println("yes door");
         a.move();
         a.wasAtDoor=true;
         return true;
       }
     }
     if(!a.dead && a.colliding(n.get())){
+      if(!a.wasAtDoor && a.lastLocation != n){
+        a.dead=true;
+        return false;
+      }
       a.lastLocation = n;
       a.move();
       return true;
     } else {
-      a.dead = true;
       if(a.wasAtDoor){
         a.move();
         a.wasAtDoor = false;
+      } else {
+        a.dead = true;
       }
       return false;
     }
@@ -120,6 +127,7 @@ public class World implements Renderable{
   }
   
   public void launch(){
+    arrowsN--;
     arrows.add(0,player.launch());
     arrows.get(0).lastLocation = map.current;
   }

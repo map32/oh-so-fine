@@ -5,7 +5,6 @@ public class Player implements Renderable, Collidable, Collidable2 {
   private float x2,y2;
   private int speed;
   private PShape bow;
-  private int score;
   boolean wasAtDoor;
   Hitbox hitbox;
 
@@ -140,21 +139,13 @@ public class Player implements Renderable, Collidable, Collidable2 {
     return new Arrow(x,y+40,z,hor,ver);
   }
 
-  public int score(){
-    return score;
-  }
-  
-  public void incScore(){
-    score++;
-    System.out.println(score);
-  }
-
 }
 
 class Arrow implements Collidable, Renderable, Collidable2 {
   PShape arrow;
+  int arrows;
   Hitbox hitbox;
-  int speed = 60;
+  int speed = 45;
   PVector location;
   PVector dLocation;
   PVector hComponent;
@@ -179,6 +170,7 @@ class Arrow implements Collidable, Renderable, Collidable2 {
     w = 20;
     h = 20;
     d = 20;
+    arrows = 100;
     hitbox = new Hitbox(x,y,z,w,h,d,0,rx+PI/2,0);
     wasAtDoor = false;
     dead = false;
@@ -194,7 +186,7 @@ class Arrow implements Collidable, Renderable, Collidable2 {
       shape(arrow,0,0,200,6);
     popMatrix();
     hitbox.locate(location);
-    hitbox.update();
+    //hitbox.update();
   }
   
   public boolean colliding(Collidable c){

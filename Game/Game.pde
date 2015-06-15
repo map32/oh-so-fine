@@ -1,9 +1,9 @@
 World world;
-//Interface hud;
-//Menu menu;
+Interface hud;
+Menu menu;
 
 
-boolean[] keys = new boolean[128];
+boolean[] keys = new boolean[256];
 final int W = 87;
 final int A = 65;
 final int S = 83;
@@ -16,15 +16,25 @@ void setup(){
   noFill();
   loop();
   world = new World();
+  hud = new Interface();
+  menu = new Menu();
 }
 
 void draw(){
   background(0);
-  world.update();
+  if(world.arrowsN<=0){
+    hud.lose(world.score,world.arrowsN);
+  } else {
+    noFill();
+    world.update();
+    hud.update(world.score,world.arrowsN);
+  }
+  menu.update();
 }
 
 void keyPressed(){
     keys[keyCode]=true;
+    menu.keyPressed();
 }
 
 void keyReleased(){
@@ -40,6 +50,10 @@ void mousePressed(){
     pressLock = true;
     world.launch();
   }
+}
+
+void restart(){
+  world = new World();
 }
 
 void mouseReleased(){
